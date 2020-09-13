@@ -36,6 +36,7 @@ public class UserService {
 
         Optional<User> userOptional = userRepository.findById(id);
         return userRepository.findById(id)
+                // Lambda expresion
                 .orElseThrow(()-> new ResourceNotFoundException("User"+ id + "does not exist"));
     }
 }
