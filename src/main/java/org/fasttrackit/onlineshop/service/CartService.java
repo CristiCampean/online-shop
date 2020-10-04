@@ -5,7 +5,7 @@ import org.fasttrackit.onlineshop.domain.Cart;
 import org.fasttrackit.onlineshop.domain.User;
 import org.fasttrackit.onlineshop.exception.ResourceNotFoundException;
 import org.fasttrackit.onlineshop.persistence.CartRepository;
-import org.fasttrackit.onlineshop.transfer.AddProdactToCartRequest;
+import org.fasttrackit.onlineshop.transfer.cart.AddProdactToCartRequest;
 import org.fasttrackit.onlineshop.transfer.cart.CartResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 public class CartService {
