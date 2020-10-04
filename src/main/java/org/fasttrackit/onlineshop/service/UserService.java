@@ -47,16 +47,18 @@ public class UserService {
     public Page<User> getUsers(GetUsersRequest request, Pageable pageable){
     LOGGER.info("Retrieving users");
 
-      if (request.getPartialFirstName() != null && request.getPartialLastName() !=null) {
-             return userRepository.findByFristNameNameContainsAndLastNameContains(
-                     request.getPartialFirstName(), request.getPartialLastName(), pageable);
-      } else if (request.getPartialFirstName() != null){
-         return userRepository.findByFirstNameContains(request.getPartialFirstName(),pageable);
-      } else if ( request.getPartialLastName() !=null)
-            return userRepository.findByLastNameContains(request.getPartialLastName(), pageable);
-     return userRepository.findAll(pageable);
-
+//     if (request.getPartialFirstName() != null && request.getPartialLastName() !=null {
+  //           return userRepository.findByFristNameAndLastNameContains(
+ //                        request.getPartialFirstName(), request.getPartialLastName(), pageable);
+ //    } else if (request.getPartialFirstName() != null){
+  //       return userRepository.findByFirstNameContains(request.getPartialFirstName(),pageable);
+//     } else if ( request.getPartialLastName() !=null){
+//         return userRepository.findByLastNameContains(request.getPartialLastName(),pageable);
+//         }
+//     return userRepository.findAll(pageable);
+     return userRepository.findByOptionalCriteria(request.getPartialFirstName(),request.getPartialLastName(),pageable);
      }
+
     public User updateUser(long id, SaveUserRequest request){
     LOGGER.info("Updating user{}:{}", id,request);
         User existingUser = getUser(id);

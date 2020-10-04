@@ -11,10 +11,6 @@ public class GetUsersRequest {
         return partialFirstName;
     }
 
-    public void setPartialFirstName(String partialFirstName) {
-        this.partialFirstName = partialFirstName;
-    }
-
     public String getPartialLastName() {
         return partialLastName;
     }
