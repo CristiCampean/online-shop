@@ -3,6 +3,7 @@ package org.fasttrackit.onlineshop.user;
 import org.fasttrackit.onlineshop.domain.User;
 import org.fasttrackit.onlineshop.exception.ResourceNotFoundException;
 import org.fasttrackit.onlineshop.service.UserService;
+import org.fasttrackit.onlineshop.steps.UserTestSteps;
 import org.fasttrackit.onlineshop.transfer.user.SaveUserRequest;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
@@ -21,13 +22,12 @@ public class UserServiceIntegrationTests {
     // field -injection
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private UserTestSteps userTestSteps;
     @Test
     public void createUser_whenValidRequest_thenReturnSavedUser() {
-        createUser();
+        userTestSteps.createUser();
     }
-
-
 
     @Test
     public void createUser_whenMissingFirstName_thenThrowException(){
@@ -48,7 +48,7 @@ public class UserServiceIntegrationTests {
     }
     @Test
      public void getUser_whenExistingUser_thenReturnUser(){
-        User createUser = createUser();
+        User createUser = userTestSteps.createUser();
 
         User userResponse = userService.getUser(createUser.getId());
         assertThat(userResponse,notNullValue());
@@ -64,7 +64,7 @@ public class UserServiceIntegrationTests {
     }
     @Test
     public  void updateUser_whenExistingUser_thenReturnUpdatedUser(){
-        User createdUser = createUser();
+        User createdUser = userTestSteps.createUser();
         SaveUserRequest request = new SaveUserRequest();
         request.setFirstName(createdUser.getFristName() + "Updated");
         request.setLastName(createdUser.getLastName()   + "Updated");
@@ -77,22 +77,10 @@ public class UserServiceIntegrationTests {
     }
       @Test
       public void deleteUser_whenExistingUser_thenTheUserIsDeleted(){
-          User createdUser = createUser();
+          User createdUser = userTestSteps.createUser();
           userService.deleteUser(createdUser.getId());
           Assertions.assertThrows(ResourceNotFoundException.class, ()-> userService.getUser(createdUser.getId()));
       }
 
-    private User createUser() {
-        SaveUserRequest request = new SaveUserRequest();
-        request.setFirstName("Test First Name");
-        request.setLastName("Test Last Name");
-        User user = userService.createUser(request);
 
-        assertThat(user, notNullValue());
-        assertThat(user.getId(), greaterThan(0L));
-        assertThat(user.getFristName(), is(request.getFirstName()));
-        assertThat(user.getLastName(), is(request.getLastName()));
-
-        return user;
-    }
 }

@@ -5,6 +5,7 @@ import org.fasttrackit.onlineshop.service.CartService;
 import org.fasttrackit.onlineshop.transfer.cart.AddProdactToCartRequest;
 import org.fasttrackit.onlineshop.transfer.cart.CartResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +25,9 @@ public class CartController {
         return cartService;
     }
     @PutMapping
-    public ResponseEntity<Cart>addProductToCar( @RequestBody @Valid AddProdactToCartRequest request){
-        Cart cart = cartService.addProductToCart(request);
-       return ResponseEntity.ok(cart);
+    public ResponseEntity<Void>addProductToCar( @RequestBody @Valid AddProdactToCartRequest request){
+        cartService.addProductToCart(request);
+       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @GetMapping("/{userId}")
     public ResponseEntity<CartResponse>getCart(@PathVariable long userId){
